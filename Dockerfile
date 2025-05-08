@@ -21,12 +21,10 @@ COPY . .
 RUN mkdir -p static
 
 # Set environment variables from build args (excluding sensitive data)
-ARG REDIS_HOST
-ARG REDIS_PORT
-ARG GIT_SHA
-ENV REDIS_HOST=$REDIS_HOST
-ENV REDIS_PORT=$REDIS_PORT
-ENV GIT_SHA=$GIT_SHA
+
+ENV REDIS_HOST=zada-ai_redis:6379
+ENV REDIS_PASSWORD=d534e80625a9971e571e
+ENV REDIS_PORT=6379
 
 # Expose ports
 EXPOSE 5000
