@@ -1,25 +1,35 @@
-
+# Use official Python slim image as base
 FROM python:3.10-slim
 
+# Set working directory
 WORKDIR /app
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    libgl1 \
+    libgl1-mesa-glx \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-ENV REDIS_HOST=zada-ai_redis:6379
-ENV REDIS_PASSWORD=d534e80625a9971e571e
-ENV REDIS_PORT=6379
-
+# Copy requirements and install Python dependencies
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy application code
 COPY . .
 
+# Create static directory
 RUN mkdir -p static
 
+# Set environment variables from build args (excluding sensitive data)
+ARG REDIS_HOST
+ARG REDIS_PORT
+ARG GIT_SHA
+ENV REDIS_HOST=$REDIS_HOST
+ENV REDIS_PORT=$REDIS_PORT
+ENV GIT_SHA=$GIT_SHA
+
+# Expose port
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+# Command to run the application
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
