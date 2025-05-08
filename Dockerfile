@@ -28,7 +28,7 @@ ENV REDIS_HOST=$REDIS_HOST
 ENV REDIS_PORT=$REDIS_PORT
 ENV GIT_SHA=$GIT_SHA
 
-# Expose port
+# Expose ports
 EXPOSE 5000
 
 # Command to run the application
