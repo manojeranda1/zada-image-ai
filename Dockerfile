@@ -20,12 +20,6 @@ COPY . .
 # Create static directory
 RUN mkdir -p static
 
-# Set environment variables from build args (excluding sensitive data)
-
-ENV REDIS_HOST=zada-ai_redis:6379
-ENV REDIS_PASSWORD=d534e80625a9971e571e
-ENV REDIS_PORT=6379
-
 # Expose ports
 EXPOSE 5000
 
